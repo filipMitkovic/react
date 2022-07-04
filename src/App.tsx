@@ -1,17 +1,19 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, useEffect } from 'react';
 import './App.css';
 import Header from './components/Header';
 import { Row, Container} from "react-bootstrap";
 import Login from "./components/Login";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import Proizvodjaci from './components/Proizvodjaci';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom'
+import Proizvodjaci from './components/proizvodjaci/Proizvodjaci';
 import Modeli from './components/Modeli';
-import Klijenti from './components/Klijenti';
+import Klijenti from './components/klijenti/Klijenti';
 import Home from './components/Home';
 import ProtectedRoute from './components/ProtectedRoute';
+import AddProizvodjac from './components/proizvodjaci/AddProizvodjac';
+import EditProizvodjac from './components/proizvodjaci/EditProizvodjac';
 
 export interface User {
-  username: string,
+  email: string,
   password: string
 }
 
@@ -21,21 +23,30 @@ function App() {
 
   const [user, setUser] = useState<User | null>(null)
 
+
+  useEffect(() => {
+    let email = localStorage.getItem('email')
+    if (email) {
+      setUser({email: email, password: ''})
+    }
+  }, [])
+
+
   return (
     <Router>
       <div className="App">
         <UserContext.Provider value={{user, setUser}}>
           <Header></Header>
             <Container className="mt-5 text-center" >
-              <Row md={4} className="mt-5 justify-content-center" >
-                <Routes>
-                  <Route path="/" element={<Home/>} />
-                  <Route path="/login" element={<Login/>} />
-                  <Route path="/proizvodjaci" element={<ProtectedRoute><Proizvodjaci/></ProtectedRoute>} ></Route>
-                  <Route path='/modeli' element={<ProtectedRoute><Modeli/></ProtectedRoute>} ></Route>
-                  <Route path='/klijenti' element={<ProtectedRoute><Klijenti/></ProtectedRoute>} ></Route>
-                </Routes>
-              </Row>
+              <Routes>
+                <Route path="/" element={<Home/>} />
+                <Route path="/login" element={<Login/>} />
+                <Route path="/proizvodjaci" element={<ProtectedRoute><Proizvodjaci/></ProtectedRoute>} ></Route>
+                <Route path="/proizvodjaci/add" element={<ProtectedRoute><AddProizvodjac/></ProtectedRoute>} ></Route>
+                <Route path="/proizvodjaci/edit/:id" element={<ProtectedRoute><EditProizvodjac/></ProtectedRoute>} ></Route>
+                <Route path='/modeli' element={<ProtectedRoute><Modeli/></ProtectedRoute>} ></Route>
+                <Route path='/klijenti' element={<ProtectedRoute><Klijenti/></ProtectedRoute>} ></Route>
+              </Routes>
             </Container>
         </UserContext.Provider>
       </div>

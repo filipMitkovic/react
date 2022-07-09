@@ -28,9 +28,11 @@ const Header: FC = (props: Props) => {
           <Navbar.Brand href="/">AutoServis</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link as={NavLink} to="/">Home</Nav.Link>
+            <Nav.Link as={NavLink} to="/pruzene-usluge">Pruzene usluge</Nav.Link>
             <Nav.Link as={NavLink} to="/proizvodjaci">Proizvodjaci</Nav.Link>
             <Nav.Link as={NavLink} to="/modeli">Modeli</Nav.Link>
-            <Nav.Link as={NavLink} to="/klijenti">Klijenti</Nav.Link>
+            <Nav.Link as={NavLink} to="/usluge">Usluge</Nav.Link>
+            <Nav.Link as={NavLink} to="/korisnici">Korisnici</Nav.Link>
           </Nav>
           <Button 
           variant={user == null ? 'success' : 'danger'}

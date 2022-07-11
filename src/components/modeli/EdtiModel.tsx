@@ -39,7 +39,7 @@ const EdtiModel = () => {
       
       axios.put(`http://localhost:8000/modeli/${model.id}`, {
         name: model.name,
-        proizvodjacId: model.ProizvodjacId
+        proizvodjacId: model.proizvodjacId
       }, headers())
         .then(res => {
           navigate('/modeli')
@@ -57,13 +57,13 @@ const EdtiModel = () => {
           <Form.Control 
             type="text"
             value={model.name}
-            onChange={event => setModel({id: model.id, name: event.target.value, proizvodjac: {} as Proizvodjac, ProizvodjacId: model.ProizvodjacId})}/>
+            onChange={event => setModel({id: model.id, name: event.target.value, proizvodjac: {} as Proizvodjac, proizvodjacId: model.proizvodjacId})}/>
         </Form.Group>
         <Form.Group className="mb-3" controlId="proizvodjac">
           <Form.Label>Proizvodjac</Form.Label>
-          <Form.Select onChange={event => model.ProizvodjacId = +event.target.value}>
+          <Form.Select onChange={event => model.proizvodjacId = +event.target.value}>
             {proizvodjaci.map(proizvodjac => 
-              <option selected={model.ProizvodjacId == proizvodjac.id} value={proizvodjac.id}>{proizvodjac.name}</option>)
+              <option selected={model.proizvodjacId == proizvodjac.id} value={proizvodjac.id}>{proizvodjac.name}</option>)
             }
           </Form.Select>
         </Form.Group>

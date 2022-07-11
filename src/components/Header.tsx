@@ -31,6 +31,7 @@ const Header: FC = (props: Props) => {
             <Nav.Link as={NavLink} to="/pruzene-usluge">Pruzene usluge</Nav.Link>
             <Nav.Link as={NavLink} to="/proizvodjaci">Proizvodjaci</Nav.Link>
             <Nav.Link as={NavLink} to="/modeli">Modeli</Nav.Link>
+            <Nav.Link as={NavLink} to="/vozila">Vozila</Nav.Link>
             <Nav.Link as={NavLink} to="/usluge">Usluge</Nav.Link>
             <Nav.Link as={NavLink} to="/korisnici">Korisnici</Nav.Link>
           </Nav>

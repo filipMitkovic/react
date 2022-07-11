@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import headers from '../../Axios'
 import { Usluga } from '../usluge/Usluge'
-import { Vozilo } from './PruzeneUsluge'
+import { Vozilo } from '../vozila/Vozila'
 
 
 const AddPruzenaUsluga = () => {
@@ -14,8 +14,8 @@ const AddPruzenaUsluga = () => {
   const [cenaUsluge, setCenaUsluge] = useState<number>(0)
   const navigate = useNavigate()
 
-  let uslugaId = useRef<number>()
-  let voziloId = useRef<number>()
+  let uslugaId = useRef<number>(0)
+  let voziloId = useRef<number>(0)
   let popust = useRef<number>(0)
   let uvecanje = useRef<number>(0)
   let placeno: boolean = false
@@ -36,7 +36,7 @@ const AddPruzenaUsluga = () => {
     
     event.preventDefault()
 
-    if (uslugaId == undefined || voziloId == undefined || cenaUsluge == undefined || placeno == undefined) {
+    if (uslugaId.current == 0 || voziloId.current == 0 || cenaUsluge == undefined || placeno == undefined) {
       alert('Sva polja moraju biti popunjena!')
       return
     }
@@ -56,7 +56,7 @@ const AddPruzenaUsluga = () => {
           navigate('/pruzene-usluge')
       })
       .catch(error => {
-          alert(error.response.data)
+          alert(error.response.data.message)
       })
   }
 
@@ -76,9 +76,10 @@ const AddPruzenaUsluga = () => {
           <Form.Label>Usluga</Form.Label>
           <Form.Select onChange={event => {
               uslugaId.current = +event.target.value; 
-              let cena = (usluge[+event.target.value - 1]).cena
-              setCenaUsluge(cena);
+              let usluga = (usluge[+event.target.value - 1])
+              usluga != undefined ? setCenaUsluge(usluga.cena) : setCenaUsluge(0)
             }}>
+            <option value={0}>Izaberite</option>
             {usluge.map(usluga => 
               <option value={usluga.id}>{usluga.name + ' - ' + usluga.cena + ' rsd'}</option>)
             }
@@ -87,6 +88,7 @@ const AddPruzenaUsluga = () => {
         <Form.Group className="mb-3" controlId="vozilo">
           <Form.Label>Vozilo</Form.Label>
           <Form.Select onChange={event => voziloId.current = +event.target.value}>
+            <option value={0}>Izaberite</option>
             {vozila.map(vozilo => 
               <option value={vozilo.id}>{`
                 (${vozilo.id}) 

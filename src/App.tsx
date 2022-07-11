@@ -19,6 +19,9 @@ import AddModel from './components/modeli/AddModel';
 import EdtiModel from './components/modeli/EdtiModel';
 import AddKorisnik from './components/korisnici/AddKorisnik';
 import EditKorisnik from './components/korisnici/EditKorisnik';
+import Vozila from './components/vozila/Vozila';
+import AddVozilo from './components/vozila/AddVozilo';
+import EditVozilo from './components/vozila/EditVozilo';
 
 export interface User {
   email: string,
@@ -62,6 +65,9 @@ function App() {
                 <Route path='/korisnici' element={<ProtectedRoute><Korisnici/></ProtectedRoute>} ></Route>
                 <Route path='/korisnici/add' element={<ProtectedRoute><AddKorisnik/></ProtectedRoute>} ></Route>
                 <Route path='/korisnici/edit/:id' element={<ProtectedRoute><EditKorisnik/></ProtectedRoute>} ></Route>
+                <Route path='/vozila' element={<ProtectedRoute><Vozila/></ProtectedRoute>} ></Route>
+                <Route path='/vozila/add' element={<ProtectedRoute><AddVozilo/></ProtectedRoute>} ></Route>
+                <Route path='/vozila/edit/:id' element={<ProtectedRoute><EditVozilo/></ProtectedRoute>} ></Route>
               </Routes>
             </Container>
         </UserContext.Provider>

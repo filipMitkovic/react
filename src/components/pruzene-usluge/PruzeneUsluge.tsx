@@ -6,18 +6,8 @@ import { useNavigate } from 'react-router-dom'
 import { Usluga } from '../usluge/Usluge'
 import { Model } from '../modeli/Modeli'
 import { Korisnik } from '../korisnici/Korisnici'
+import { Vozilo } from '../vozila/Vozila'
 
-export interface Vozilo {
-  id: number,
-  tip_goriva: string,
-  tip_menjaca: string,
-  broj_registracije: number,
-  broj_sasije: number,
-  broj_motora: number,
-  boja: string,
-  model: Model,
-  korisnik: Korisnik
-}
 
 export interface PruzenaUsluga {
     id: number,

@@ -12,7 +12,7 @@ const AddModel = () => {
   const navigate = useNavigate()
 
   let name: string = ''
-  let proizvodjacId: string = '1'
+  let proizvodjacId: number = 0
 
   useEffect(() => {
     axios.get<Proizvodjac[]>('http://localhost:8000/proizvodjaci', headers())
@@ -25,14 +25,14 @@ const AddModel = () => {
     
     event.preventDefault()
 
-    if (name == '' || proizvodjacId == '') {
+    if (name == '' || proizvodjacId == 0) {
       alert('Sva polja moraju biti popunjena!')
       return
     }
 
     axios.post(`http://localhost:8000/modeli`, {
         name: name,
-        proizvodjacId: +proizvodjacId
+        proizvodjacId: proizvodjacId
     }, headers())
       .then(response => {
           navigate('/modeli')
@@ -53,7 +53,8 @@ const AddModel = () => {
         </Form.Group>
         <Form.Group className="mb-3" controlId="proizvodjac">
           <Form.Label>Proizvodjac</Form.Label>
-          <Form.Select onChange={event => proizvodjacId = event.target.value}>
+          <Form.Select onChange={event => proizvodjacId = +event.target.value}>
+            <option value={0}>Izaberite</option>
             {proizvodjaci.map(proizvodjac => 
               <option value={proizvodjac.id}>{proizvodjac.name}</option>)
             }

@@ -8,6 +8,7 @@ import { Proizvodjac } from '../proizvodjaci/Proizvodjaci'
 export interface Model {
     id: number,
     name: string,
+    ProizvodjacId: number,
     proizvodjac: Proizvodjac
 }
 

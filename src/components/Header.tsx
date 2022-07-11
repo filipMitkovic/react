@@ -16,6 +16,7 @@ const Header: FC = (props: Props) => {
     if (user) {
       localStorage.removeItem('id')
       localStorage.removeItem('jwt')
+      localStorage.removeItem('email')
       setUser(null)
     }
 
@@ -27,7 +28,6 @@ const Header: FC = (props: Props) => {
       <Container>
           <Navbar.Brand href="/">AutoServis</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link as={NavLink} to="/">Home</Nav.Link>
             <Nav.Link as={NavLink} to="/pruzene-usluge">Pruzene usluge</Nav.Link>
             <Nav.Link as={NavLink} to="/proizvodjaci">Proizvodjaci</Nav.Link>
             <Nav.Link as={NavLink} to="/modeli">Modeli</Nav.Link>

@@ -6,7 +6,6 @@ import Login from "./components/Login";
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom'
 import Proizvodjaci from './components/proizvodjaci/Proizvodjaci';
 import Modeli from './components/modeli/Modeli';
-import Home from './components/Home';
 import ProtectedRoute from './components/ProtectedRoute';
 import AddProizvodjac from './components/proizvodjaci/AddProizvodjac';
 import EditProizvodjac from './components/proizvodjaci/EditProizvodjac';
@@ -18,6 +17,8 @@ import AddPruzenaUsluga from './components/pruzene-usluge/AddPruzenaUsluga';
 import Korisnici from './components/korisnici/Korisnici';
 import AddModel from './components/modeli/AddModel';
 import EdtiModel from './components/modeli/EdtiModel';
+import AddKorisnik from './components/korisnici/AddKorisnik';
+import EditKorisnik from './components/korisnici/EditKorisnik';
 
 export interface User {
   email: string,
@@ -29,7 +30,6 @@ export const UserContext = createContext({} as any)
 function App() {
 
   const [user, setUser] = useState<User | null>(null)
-
 
   useEffect(() => {
     let email = localStorage.getItem('email')
@@ -46,7 +46,7 @@ function App() {
           <Header></Header>
             <Container className="mt-5 text-center" >
               <Routes>
-                <Route path="/" element={<Home/>} />
+                <Route path="/" element={<ProtectedRoute><PruzeneUsluge/></ProtectedRoute>} />
                 <Route path="/login" element={<Login/>} />
                 <Route path="/pruzene-usluge" element={<ProtectedRoute><PruzeneUsluge/></ProtectedRoute>} ></Route>
                 <Route path="/pruzene-usluge/add" element={<ProtectedRoute><AddPruzenaUsluga/></ProtectedRoute>} ></Route>
@@ -60,6 +60,8 @@ function App() {
                 <Route path='/modeli/add' element={<ProtectedRoute><AddModel/></ProtectedRoute>} ></Route>
                 <Route path='/modeli/edit/:id' element={<ProtectedRoute><EdtiModel/></ProtectedRoute>} ></Route>
                 <Route path='/korisnici' element={<ProtectedRoute><Korisnici/></ProtectedRoute>} ></Route>
+                <Route path='/korisnici/add' element={<ProtectedRoute><AddKorisnik/></ProtectedRoute>} ></Route>
+                <Route path='/korisnici/edit/:id' element={<ProtectedRoute><EditKorisnik/></ProtectedRoute>} ></Route>
               </Routes>
             </Container>
         </UserContext.Provider>

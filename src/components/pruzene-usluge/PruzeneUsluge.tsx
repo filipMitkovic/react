@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Table, Button } from 'react-bootstrap'
+import { Table, Button, Row, Col } from 'react-bootstrap'
 import headers from '../../Axios'
 import { useNavigate } from 'react-router-dom'
 import { Usluga } from '../usluge/Usluge'
@@ -57,6 +57,44 @@ const PruzeneUsluge = () => {
       })
   }
 
+  const fetchForUser = (id: number) => {
+    axios.get<PruzenaUsluga[]>(`http://localhost:8000/pruzene-usluge/istorija/korisnik/${id}`, headers())
+      .then(res => {
+        let pruzeneUsluge: PruzenaUsluga[] = res.data as PruzenaUsluga[]
+        setUsluge(pruzeneUsluge)
+        let sum = pruzeneUsluge
+          .map(p => p.placeno ? p.cena : 0)
+          .reduce((previous, current) => previous + current, 0)
+        let dugovanja = pruzeneUsluge
+          .map(p => p.placeno ? 0 : p.cena)
+          .reduce((previous, current) => previous + current, 0)
+        setUkupno(sum)
+        setDugovanja(dugovanja)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  const fetchForVozilo = (id: number) => {
+    axios.get<PruzenaUsluga[]>(`http://localhost:8000/pruzene-usluge/istorija/vozilo/${id}`, headers())
+      .then(res => {
+        let pruzeneUsluge: PruzenaUsluga[] = res.data as PruzenaUsluga[]
+        setUsluge(pruzeneUsluge)
+        let sum = pruzeneUsluge
+          .map(p => p.placeno ? p.cena : 0)
+          .reduce((previous, current) => previous + current, 0)
+        let dugovanja = pruzeneUsluge
+          .map(p => p.placeno ? 0 : p.cena)
+          .reduce((previous, current) => previous + current, 0)
+        setUkupno(sum)
+        setDugovanja(dugovanja)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   const platiUslugu = (id: number): void => {
     axios.put(`http://localhost:8000/pruzene-usluge/placanje/${id}`, {} ,headers())
       .then(res => {
@@ -69,6 +107,11 @@ const PruzeneUsluge = () => {
 
   return (
     <>
+    <Row>
+      <Col md={1}>
+        <Button onClick={() => fetchData()}>Sve</Button>
+      </Col>
+    </Row>
     <Button className='mb-3' onClick={() => navigate('/pruzene-usluge/add')}>Dodaj</Button>
     <Table striped bordered hover>
       <thead>
@@ -86,8 +129,8 @@ const PruzeneUsluge = () => {
           <td>{usluga.id}</td>
           <td>{usluga.usluga.name + ' (' + usluga.usluga.cena + ' rsd)'}</td>
           <td>{usluga.cena + ' rsd'}</td>
-          <td>{usluga.vozilo.model.proizvodjac.name + ' ' + usluga.vozilo.model.name}</td>
-          <td>{usluga.vozilo.korisnik.first_name + ' ' + usluga.vozilo.korisnik.last_name}</td>
+          <td onClick={() => fetchForVozilo(usluga.vozilo.id)}>{usluga.vozilo.model.proizvodjac.name + ' ' + usluga.vozilo.model.name}</td>
+          <td onClick={() => fetchForUser(usluga.vozilo.korisnik.id)}>{usluga.vozilo.korisnik.first_name + ' ' + usluga.vozilo.korisnik.last_name}</td>
           <td><Button 
             variant='success' 
             className={usluga.placeno ? 'disabled' : ''} 
@@ -99,7 +142,7 @@ const PruzeneUsluge = () => {
         <tr className='table-warning'>
           <td>Total</td>
           <td></td>
-          <td>Prihod: {ukupno} | Dugovanja: {dugovanja}</td>
+          <td><pre><h5 className='text-success'>Prihod: {ukupno}</h5><h5 className='text-danger'>Dugovanja: {dugovanja}</h5></pre></td>
           <td></td>
           <td></td>
           <td></td>

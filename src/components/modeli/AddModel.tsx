@@ -12,7 +12,7 @@ const AddModel = () => {
   const navigate = useNavigate()
 
   let name: string = ''
-  let proizvodjacId: string = ''
+  let proizvodjacId: string = '1'
 
   useEffect(() => {
     axios.get<Proizvodjac[]>('http://localhost:8000/proizvodjaci', headers())

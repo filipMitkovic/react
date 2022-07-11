@@ -53,8 +53,8 @@ const Korisnici: FC = () => {
       <tbody>
         {korisnici.map(korisnik => <tr key={korisnik.id}>
           <td>{korisnik.id}</td>
-          <td>{korisnik.first_name}</td>
-          <td>{korisnik.last_name}</td>
+          <td onClick={() => navigate(`/korisnici/edit/${korisnik.id}`)}>{korisnik.first_name}</td>
+          <td onClick={() => navigate(`/korisnici/edit/${korisnik.id}`)}>{korisnik.last_name}</td>
           <td>{korisnik.phone}</td>
           <td><Button variant='danger' onClick={() => deleteKorisnik(korisnik.id)}>Delete</Button></td>
         </tr>)}

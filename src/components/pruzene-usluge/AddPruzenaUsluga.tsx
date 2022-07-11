@@ -17,7 +17,7 @@ const AddPruzenaUsluga = () => {
   let uslugaId = useRef<number>()
   let voziloId = useRef<number>()
   let popust = useRef<number>(0)
-  let uvecanje = useRef<number>()
+  let uvecanje = useRef<number>(0)
   let placeno: boolean = false
 
   useEffect(() => {
@@ -41,6 +41,11 @@ const AddPruzenaUsluga = () => {
       return
     }
 
+    if (cenaUsluge <= 0) {
+      alert('Neispravna cena.')
+      return
+    }
+
     axios.post(`http://localhost:8000/pruzene-usluge`, {
         uslugaId: uslugaId.current,
         voziloId: voziloId.current,
@@ -57,6 +62,10 @@ const AddPruzenaUsluga = () => {
 
   const calculatePopust = () => {
     setCenaUsluge(cenaUsluge - (cenaUsluge * popust.current / 100))
+  }
+
+  const calculateUvecanje = () => {
+    setCenaUsluge(cenaUsluge + (cenaUsluge * uvecanje.current / 100))
   }
 
 
@@ -102,6 +111,14 @@ const AddPruzenaUsluga = () => {
             onChange={event => popust.current = +event.target.value}/>
           <Button className='mt-1' onClick={() => calculatePopust()}>Izracunaj</Button>
         </Form.Group>
+        <Form.Group className="mb-3" controlId="popust">
+          <Form.Label>Uvecanje(%)</Form.Label>
+          <Form.Control 
+            type="text"
+            onChange={event => uvecanje.current = +event.target.value}/>
+          <Button className='mt-1' onClick={() => calculateUvecanje()}>Izracunaj</Button>
+        </Form.Group>
+
 
         <Button variant="primary" type="submit">
           Dodaj

@@ -1,6 +1,4 @@
-import React, { useContext } from 'react'
 import { Navigate } from 'react-router-dom'
-import { User, UserContext } from '../App'
 
 type Props = {
   children: JSX.Element
@@ -8,9 +6,9 @@ type Props = {
 
 const ProtectedRoute = ({ children }: Props) => {
 
-  const { user } = useContext(UserContext)
+  const jwt = localStorage.getItem('jwt')
 
-  if (!user) {
+  if (!jwt) {
     return <Navigate to='/login' replace></Navigate>
   } 
 

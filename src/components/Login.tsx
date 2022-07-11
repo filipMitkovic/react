@@ -30,12 +30,14 @@ const Login: FC = () => {
         email: email,
         password: password
     }).then(response => {
+        console.log(response.data)
         localStorage.setItem('email', email)
         localStorage.setItem('id', JSON.stringify(response.data.id))
         localStorage.setItem('jwt', response.data.jwt)
         context.setUser({email: email, password: password})
-        navigate('/proizvodjaci')
+        navigate('/pruzene-usluge')
     }).catch(error => {
+        console.log('error')
         alert(error.response.data)
     })
 
